@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - Bigsnake
   - player
+  - bullet
+  - coin
+  - apple
   layers:
   - Default
   - TransparentFX

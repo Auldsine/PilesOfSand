@@ -7,7 +7,7 @@ public class Playerstats : MonoBehaviour
     // Start is called before the first frame update
     public int health=6;  
     public int deaths=0;
-    public int lives=1;
+    public int lives=3;
     public float flickerduration=0.1f;
     private float flickertime=0f;
     private SpriteRenderer spriterenderer;
@@ -54,14 +54,14 @@ public class Playerstats : MonoBehaviour
             }
             Debug.Log("Player health: " + this.health.ToString());
             Debug.Log("Player lives: "  + this.lives.ToString());
-            Debug.Log("Game over / Player deaths: " + this.deaths+" Player health: " + this.health+" Player lives: " + this.lives.ToString());
+            Debug.Log("Player deaths: " + this.deaths+" Player health: " + this.health+" Player lives: " + this.lives.ToString());
         }
         Playhitreaction();
     }
     public void Collectcoins(int coinValue)
     {
         coinscollected= coinscollected+ coinValue;
-    }   
+    }
     // Update is called once per frame
     void Update()
     {
@@ -77,5 +77,16 @@ public class Playerstats : MonoBehaviour
     void Playhitreaction(){
         this.isImmune=true;
         this.immunityTime=0f;
+    }
+    public void healthrestore(int missinghealth)
+    {
+        if(health>=1 && health<6){
+        health= health+ missinghealth;
+        if(health>6){
+           health=6;
+        }
+        }
+        
+        
     }
 }

@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool grounded;
    
     private Animator anim; 
-    public int coinscollected=0;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     {
         grounded = Physics2D.OverlapCircle(groundcheck.position, groundcheckradius, whatisground);
     }
+
+
     void Update()
     {
         

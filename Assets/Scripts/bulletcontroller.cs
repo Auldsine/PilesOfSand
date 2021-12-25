@@ -7,7 +7,7 @@ public class bulletcontroller : MonoBehaviour
     // Start is called before the first frame update
     public float speed;
     private PlayerController player;
-
+    public AudioClip bullet;
     void Start()
     {
         player=FindObjectOfType<PlayerController>();    
@@ -17,7 +17,6 @@ public class bulletcontroller : MonoBehaviour
             transform.localScale=new Vector3(-(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -31,6 +30,8 @@ public class bulletcontroller : MonoBehaviour
         if(other.tag!="player"){
             Destroy(this.gameObject);
         }
-        
+        if(other.tag=="player"){
+              Audiomanager.instance.RandomSfx(bullet);
+        }
     }
 }
