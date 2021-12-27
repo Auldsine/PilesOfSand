@@ -64,7 +64,7 @@ public class Camerafollow : MonoBehaviour
     {
         if (nextTimeToSearch <= Time.time)
         {
-            GameObject searchResult = GameObject.FindGameObjectWithTag("Player");
+            GameObject searchResult = GameObject.FindGameObjectWithTag("player");
             if (searchResult != null)
                 target = searchResult.transform;
             nextTimeToSearch = Time.time + 0.5f;
