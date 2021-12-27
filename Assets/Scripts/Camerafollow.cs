@@ -1,49 +1,73 @@
+using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class Camerafollow : MonoBehaviour
 {
-    public float FollowSpeed = 2f;
-    public float yOffset =1f;
+
     public Transform target;
-    void start(){
+    public float damping = 1;
+    public float lookAheadFactor = 3;
+    public float lookAheadReturnSpeed = 0.5f;
+    public float lookAheadMoveThreshold = 0.1f;
+    public float yPosRestriction = -1;
 
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        Vector3 newPos = new Vector3(target.position.x,target.position.y + yOffset,-10f);
-        transform.position = Vector3.Slerp(transform.position,newPos,FollowSpeed*Time.deltaTime);
-    }
-}
+    float offsetZ;
+    Vector3 lastTargetPosition;
+    Vector3 currentVelocity;
+    Vector3 lookAheadPos;
 
-/* using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+    float nextTimeToSearch = 0;
 
-public class Camerafollow : MonoBehaviour
-{
-    public Transform Target;
-    public float Cameraspeed;
-    public float minX,maxX;
-    public float minY,maxY;
+    // Use this for initialization
     void Start()
-    {  
+    {
+        lastTargetPosition = target.position;
+        offsetZ = (transform.position - target.position).z;
+        transform.parent = null;
     }
+
     // Update is called once per frame
     void Update()
-    { 
-        
-    }
-    void fixedupdate()
     {
-        if(Target!=null){
-            Vector2 newCamPosition=Vector2.Lerp(transform.position, Target.position,Time.deltaTime*Cameraspeed);
-                float clampx=Mathf.Clamp(newCamPosition.x,minX,maxX);
-                float clampy=Mathf.Clamp(newCamPosition.y,minY,maxY);
-            transform.position=new Vector3(clampx, clampy,-10f);
+
+        if (target == null)
+        {
+            FindPlayer();
+            return;
+        }
+
+        // only update lookahead pos if accelerating or changed direction
+        float xMoveDelta = (target.position - lastTargetPosition).x;
+
+        bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
+
+        if (updateLookAheadTarget)
+        {
+            lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
+        }
+        else
+        {
+            lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);
+        }
+
+        Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ;
+        Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
+
+        newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, yPosRestriction, Mathf.Infinity), newPos.z);
+
+        transform.position = newPos;
+
+        lastTargetPosition = target.position;
+    }
+
+    void FindPlayer()
+    {
+        if (nextTimeToSearch <= Time.time)
+        {
+            GameObject searchResult = GameObject.FindGameObjectWithTag("Player");
+            if (searchResult != null)
+                target = searchResult.transform;
+            nextTimeToSearch = Time.time + 0.5f;
         }
     }
 }
-*/
