@@ -21,7 +21,7 @@ TagManager:
   - Player
   - foreground
   - Wall
-  - 
+  - background
   - 
   - 
   - 
@@ -44,14 +44,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: bg parallax
+    uniqueID: 1802462733
     locked: 0
   - name: background
     uniqueID: 2176585287
     locked: 0
   - name: foreground
     uniqueID: 1738728453
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: player
     uniqueID: 3361977153
