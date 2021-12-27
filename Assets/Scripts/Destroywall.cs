@@ -16,7 +16,6 @@ public class Destroywall : MonoBehaviour
         if(other.tag=="player")
         {
             Destroy(wall);
-            Debug.Log("Arrived Safely. Thanks for Playing!".ToString());
         }
     }
     void Update()
