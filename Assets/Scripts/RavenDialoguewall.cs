@@ -19,9 +19,10 @@ public class RavenDialoguewall : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag=="player"){
-            string[] dialogue={"Raven: The wall needs explosives to be destroyed, Do you have any?",
+            string[] dialogue={"Raven: Watchout!!, The snake is guarding the wall and you need to jump on its head in order to kill it",
+            "Raven: The wall needs big explosives to be destroyed, do you have any ?",
             "Yonoko: No but I have what is better.",
-            "Raven: There is an apple that can restore your strength behind the wall"};
+            "Raven: Okay be carefull, There is an apple that can restore your strength above a tree behind the wall",};
             dialogueManager.SetSentences(dialogue);
             dialogueManager.StartCoroutine(dialogueManager.TypeDialogue());
         }
